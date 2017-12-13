@@ -218,9 +218,10 @@ export CW_NO_SHADOW='1'
 # don't want to bother providing the CUPS headers this needs.
 export ENABLE_SMB_PRINTING=
 
-# If your distro uses certain versions of Perl, make sure either Makefile.master
-# contains your new defaults OR your .env file sets them.
-# These are how you would override for building on OmniOS r151012, for example.
-#export PERL_VERSION=5.16.1
-#export PERL_ARCH=i86pc-solaris-thread-multi-64int
+#
+# The build interrogates the PERL interpreter for values needed to build and
+# package PERL related bits.  If your distro doesn't use a versioning suffix
+# in the form "-{major}{minor}" in the perl package fmri(s), you will want to
+# make corresponding adjustments to Makefile.master or override PERL_PKGVERS.
+# This is how you might override for building on OmniOS r151012, for example.
 #export PERL_PKGVERS=-5161

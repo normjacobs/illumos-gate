@@ -19,15 +19,21 @@ include $(SRC)/lib/Makefile.lib
 # but as they were also needed in usr/src/pkg/Makefile,
 # the definition was moved to usr/src/Makefile.master
 
-PERLDIR = $(ADJUNCT_PROTO)/usr/perl5/$(PERL_VERSION)
-PERLLIBDIR = $(PERLDIR)/lib/$(PERL_ARCH)
+# Do some macro substitution to figure out if PERL is inside the ADJUNCT_PROTO
+# area so that the build uses includes and libraries from the ADJUNCT_PROTO if
+# that is where PERL is located.
+_PERL_ADJUNCT_PROTO=$(PERL:$(ADJUNCT_PROTO)%=$(ADJUNCT_PROTO))
+PERL_ADJUNCT_PROTO=$(_PERL_ADJUNCT_PROTO:$(PERL)=)
+
+PERLDIR = $(PERL_ADJUNCT_PROTO)$(PERL_PREFIX)
+PERLLIBDIR = $(PERL_ADJUNCT_PROTO)$(PERL_ARCHLIB)
 PERLINCDIR = $(PERLLIBDIR)/CORE
 
 PERLMOD = $(MODULE).pm
 PERLEXT = $(MACH)/$(MODULE).so
 
-ROOTPERLDIR = $(ROOT)/usr/perl5/$(PERL_VERSION)
-ROOTPERLLIBDIR = $(ROOTPERLDIR)/lib/$(PERL_ARCH)
+ROOTPERLDIR = $(ROOT)$(PERL_PREFIX)
+ROOTPERLLIBDIR = $(ROOT)$(PERL_ARCHLIB)
 ROOTPERLMODDIR = $(ROOTPERLLIBDIR)/Sun/Solaris
 ROOTPERLEXTDIR = $(ROOTPERLLIBDIR)/auto/Sun/Solaris/$(MODULE)
 
